@@ -1,17 +1,47 @@
 %h1 Listing Posts
 
-%table.table
-  %thead
-    %tr
-      %th Title
-      %th Content
+.container
+  .row
+    .text-center
+      %button.btn.btn-primary.btn-lg{"data-toggle" => "modal", "data-target" => "#mynewpost"}
+        New Post
 
-  %tbody
-    - @posts.each do |post|
-      %tr
-        %td= link_to post.title, post
-        %td= post.content
+  #container_posts.row
+    =render @posts
 
-%p
-  -if current_user
-    =link_to 'New Post', new_post_path
+  =simple_form_for(@post) do |f|
+    / Modal
+    #mynewpost.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} ×
+            %h4#myModalLabel.modal-title New Post
+          .modal-body
+            .row
+              .text-center
+                =f.text_area :title, label: false, placeholder: 'Title', input_html: {class: 'form-control'}
+            .row
+              .text-center
+                =f.text_area :content, label: false, placeholder: 'Content', input_html: {class: 'form-control'}
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+            = f.button :submit, class: 'btn btn-primary'
+
+
+        -#%table.table
+        -#  %thead
+        -#    %tr
+        -#      %th Title
+        -#      %th Content
+        -#
+        -#  %tbody
+        -#    - @posts.each do |post|
+        -#      %tr
+        -#        %td= link_to post.title, post
+        -#        %td= post.content
+        -#
+        -#%p
+        -#  -if current_user
+        -#    =link_to 'New Post', new_post_path
