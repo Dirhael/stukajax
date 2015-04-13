@@ -1,0 +1,17 @@
+%h1 Listing Posts
+
+%table.table
+  %thead
+    %tr
+      %th Title
+      %th Content
+
+  %tbody
+    - @posts.each do |post|
+      %tr
+        %td= link_to post.title, post
+        %td= post.content
+
+%p
+  -if current_user
+    =link_to 'New Place', new_post_path
